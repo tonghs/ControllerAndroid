@@ -1,22 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <module ip="192.168.1.5" port="8080"
-      switch1="功能1"
-      switch2="功能2"
-      switch3="功能3"
-      switch4="功能4"
-      switch5="功能5"
-      switch6="功能6">
-      新模块5
-    </module>
+    <area name="area1">
+        <module name="新模块1" ip="127.0.0.1" port="8080"
+          switch1="功能1"
+          switch2="功能2"
+          switch3="功能3"
+          switch4="功能4"
+          switch5="功能5"
+          switch6="功能6"/>
+        <module name="新模块2" ip="127.0.0.1" port="8081"
+            switch1="1功能1"
+            switch2="2功能2"
+            switch3="3功能3"
+            switch4="4功能4"
+            switch5="5功能5"
+            switch6="6功能6"/>
+    </area>
 
-    <module ip="192.168.1.4" port="8080"
-        switch1="1功能1"
-        switch2="1功能2"
-        switch3="1功能3"
-        switch4="1功能4"
-        switch5="1功能5"
-        switch6="1功能6">
-        新模块1
-    </module>
+    <area name="area2">
+        <module name="新模块1" ip="127.0.0.1" port="8080"
+            switch1="1功能1"
+            switch2="2功能2"
+            switch3="3功能3"
+            switch4="4功能4"
+            switch5="5功能5"
+            switch6="6功能6"/>
+    </area>
 </root>

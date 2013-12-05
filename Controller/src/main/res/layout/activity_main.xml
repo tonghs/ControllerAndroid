@@ -8,8 +8,6 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -36,29 +34,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fun1"
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="功能1"
-                android:layout_marginRight="10px"/>
-
-            <Button
-                android:id="@+id/fun1_on"
-                android:text="@string/on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="1"
-                android:onClick="onOnBtnClick"/>
-
-            <Button
-                android:id="@+id/fun1_off"
-                android:text="@string/off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="1"/>
+                android:text="fun1"
+                android:id="@+id/switch1" />
 
         </LinearLayout>
         <LinearLayout
@@ -66,29 +46,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fun1"
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="功能1"
-                android:layout_marginRight="10px"/>
-
-            <Button
-                android:id="@+id/fun2_on"
-                android:text="@string/on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="2"
-                android:onClick="onOnBtnClick"/>
-
-            <Button
-                android:id="@+id/fun2_off"
-                android:text="@string/off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="2"/>
+                android:text="fun2"
+                android:id="@+id/switch2" />
 
         </LinearLayout>
         <LinearLayout
@@ -96,29 +58,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fun1"
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="功能1"
-                android:layout_marginRight="10px"/>
-
-            <Button
-                android:id="@+id/fun3_on"
-                android:text="@string/on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="3"
-                android:onClick="onOnBtnClick"/>
-
-            <Button
-                android:id="@+id/fun3_off"
-                android:text="@string/off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="3"/>
+                android:text="fun3"
+                android:id="@+id/switch3" />
 
         </LinearLayout>
         <LinearLayout
@@ -126,29 +70,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fun1"
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="功能1"
-                android:layout_marginRight="10px"/>
-
-            <Button
-                android:id="@+id/fun4_on"
-                android:text="@string/on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="4"
-                android:onClick="onOnBtnClick"/>
-
-            <Button
-                android:id="@+id/fun4_off"
-                android:text="@string/off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="4"/>
+                android:text="fun4"
+                android:id="@+id/switch4" />
 
         </LinearLayout>
         <LinearLayout
@@ -156,29 +82,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fun1"
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="功能1"
-                android:layout_marginRight="10px"/>
-
-            <Button
-                android:id="@+id/fun5_on"
-                android:text="@string/on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="5"
-                android:onClick="onOnBtnClick"/>
-
-            <Button
-                android:id="@+id/fun5_off"
-                android:text="@string/off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="5"/>
+                android:text="fun5"
+                android:id="@+id/switch5" />
 
         </LinearLayout>
         <LinearLayout
@@ -186,29 +94,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fun1"
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="功能1"
-                android:layout_marginRight="10px"/>
-
-            <Button
-                android:id="@+id/fun6_on"
-                android:text="@string/on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="6"
-                android:onClick="onOnBtnClick"/>
-
-            <Button
-                android:id="@+id/fun6_off"
-                android:text="@string/off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10px"
-                android:tag="6"/>
+                android:text="fun6"
+                android:id="@+id/switch6" />
 
         </LinearLayout>
     </LinearLayout>

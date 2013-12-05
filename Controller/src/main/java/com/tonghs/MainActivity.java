@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 
         final Spinner dropdown = (Spinner)findViewById(R.id.modules);
 
-        List<Model> list = getModuls();
+        List<Model> list = getModuls("area1");
         if(list != null && list.size() > 0){
 
             ArrayAdapter<Model> adapter = new ArrayAdapter<Model>(this,
@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dropdown.setAdapter(adapter);
 
+            //下拉列表选择事件
             dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -72,7 +73,7 @@ public class MainActivity extends Activity {
     }
 
 
-    public List<Model> getModuls(){
+    public List<Model> getModuls(String areaName){
         List<Model> listModel = new ArrayList<Model>();
         Resources res = getResources();
         XmlResourceParser xres = res.getXml(R.xml.modules);
@@ -83,17 +84,25 @@ public class MainActivity extends Activity {
                 if (eventType == XmlPullParser.START_TAG){
                     //get tag name
                     String tagName = xres.getName();
-                    if(tagName.equals("module")){
-                        Model m = new Model();
-                        m.setIp(xres.getAttributeValue(null, "ip"));
-                        m.setFun1Name(xres.getAttributeValue(null, "switch1"));
-                        m.setFun2Name(xres.getAttributeValue(null, "switch2"));
-                        m.setFun3Name(xres.getAttributeValue(null, "switch3"));
-                        m.setFun4Name(xres.getAttributeValue(null, "switch4"));
-                        m.setFun5Name(xres.getAttributeValue(null, "switch5"));
-                        m.setFun6Name(xres.getAttributeValue(null, "switch6"));
-                        m.setName(xres.nextText());
-                        listModel.add(m);
+                    if (tagName.equals("area") && xres.getAttributeValue(null, "name").equals(areaName)){
+                        eventType = xres.next();
+                        tagName = xres.getName();
+                        while(tagName.equals("module")){
+                            if(tagName.equals("module") && eventType != XmlPullParser.END_TAG){
+                                Model m = new Model();
+                                m.setIp(xres.getAttributeValue(null, "ip"));
+                                m.setFun1Name(xres.getAttributeValue(null, "switch1"));
+                                m.setFun2Name(xres.getAttributeValue(null, "switch2"));
+                                m.setFun3Name(xres.getAttributeValue(null, "switch3"));
+                                m.setFun4Name(xres.getAttributeValue(null, "switch4"));
+                                m.setFun5Name(xres.getAttributeValue(null, "switch5"));
+                                m.setFun6Name(xres.getAttributeValue(null, "switch6"));
+                                m.setName(xres.getAttributeValue(null, "name"));
+                                listModel.add(m);
+                            }
+                            eventType = xres.next();
+                            tagName = xres.getName();
+                        }
                     }
                 }
 
