@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.tonghs.model.Model;
+import com.tonghs.util.XmlUtil;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+    XmlUtil xu = new XmlUtil();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,8 @@ public class MainActivity extends Activity {
 
         final Spinner dropdown = (Spinner)findViewById(R.id.modules);
 
-        List<Model> list = getModuls("area1");
+        List<Model> list = xu.getModuls("area1", getBaseContext());
+
         if(list != null && list.size() > 0){
 
             ArrayAdapter<Model> adapter = new ArrayAdapter<Model>(this,
@@ -70,51 +73,6 @@ public class MainActivity extends Activity {
 
     public void onOffBtnClick(View v) {
 
-    }
-
-
-    public List<Model> getModuls(String areaName){
-        List<Model> listModel = new ArrayList<Model>();
-        Resources res = getResources();
-        XmlResourceParser xres = res.getXml(R.xml.modules);
-        try{
-            xres.next();
-            int eventType = xres.getEventType();
-            while(eventType != XmlPullParser.END_DOCUMENT){
-                if (eventType == XmlPullParser.START_TAG){
-                    //get tag name
-                    String tagName = xres.getName();
-                    if (tagName.equals("area") && xres.getAttributeValue(null, "name").equals(areaName)){
-                        eventType = xres.next();
-                        tagName = xres.getName();
-                        while(tagName.equals("module")){
-                            if(tagName.equals("module") && eventType != XmlPullParser.END_TAG){
-                                Model m = new Model();
-                                m.setIp(xres.getAttributeValue(null, "ip"));
-                                m.setFun1Name(xres.getAttributeValue(null, "switch1"));
-                                m.setFun2Name(xres.getAttributeValue(null, "switch2"));
-                                m.setFun3Name(xres.getAttributeValue(null, "switch3"));
-                                m.setFun4Name(xres.getAttributeValue(null, "switch4"));
-                                m.setFun5Name(xres.getAttributeValue(null, "switch5"));
-                                m.setFun6Name(xres.getAttributeValue(null, "switch6"));
-                                m.setName(xres.getAttributeValue(null, "name"));
-                                listModel.add(m);
-                            }
-                            eventType = xres.next();
-                            tagName = xres.getName();
-                        }
-                    }
-                }
-
-                eventType = xres.next();
-            }
-
-        }catch (Exception e){
-
-        }
-
-
-        return listModel;
     }
     
 }
