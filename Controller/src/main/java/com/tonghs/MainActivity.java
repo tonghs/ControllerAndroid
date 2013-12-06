@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.tonghs.manager.AreaMgr;
 import com.tonghs.manager.ModuleMgr;
@@ -64,7 +65,23 @@ public class MainActivity extends Activity {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     Module module = (Module) spinnerModule.getSelectedItem();
+
+                    Switch fun1 = (Switch)findViewById(R.id.fun1);
+                    Switch fun2 = (Switch)findViewById(R.id.fun2);
+                    Switch fun3 = (Switch)findViewById(R.id.fun3);
+                    Switch fun4 = (Switch)findViewById(R.id.fun4);
+                    Switch fun5 = (Switch)findViewById(R.id.fun5);
+                    Switch fun6 = (Switch)findViewById(R.id.fun6);
+
+                    fun1.setText(module.getFun1());
+                    fun2.setText(module.getFun2());
+                    fun3.setText(module.getFun3());
+                    fun4.setText(module.getFun4());
+                    fun5.setText(module.getFun5());
+                    fun6.setText(module.getFun6());
+
                     String ip = module.getIp();
+
 //                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
 //                    dialog.setTitle(String.valueOf(ip)).show();
                 }

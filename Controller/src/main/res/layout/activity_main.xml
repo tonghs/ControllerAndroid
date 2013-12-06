@@ -53,8 +53,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fun1"
-                android:id="@+id/switch1" />
+                android:textSize="20sp"
+                android:text="功能1"
+                android:id="@+id/fun1" />
 
         </LinearLayout>
         <LinearLayout
@@ -65,8 +66,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fun2"
-                android:id="@+id/switch2" />
+                android:textSize="20sp"
+                android:text="功能2"
+                android:id="@+id/fun2" />
 
         </LinearLayout>
         <LinearLayout
@@ -77,8 +79,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fun3"
-                android:id="@+id/switch3" />
+                android:textSize="20sp"
+                android:text="功能3"
+                android:id="@+id/fun3" />
 
         </LinearLayout>
         <LinearLayout
@@ -89,8 +92,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fun4"
-                android:id="@+id/switch4" />
+                android:textSize="20sp"
+                android:text="功能4"
+                android:id="@+id/fun4" />
 
         </LinearLayout>
         <LinearLayout
@@ -101,8 +105,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fun5"
-                android:id="@+id/switch5" />
+                android:textSize="20sp"
+                android:text="功能5"
+                android:id="@+id/fun5" />
 
         </LinearLayout>
         <LinearLayout
@@ -113,8 +118,9 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="fun6"
-                android:id="@+id/switch6" />
+                android:textSize="20sp"
+                android:text="功能6"
+                android:id="@+id/fun6" />
 
         </LinearLayout>
     </LinearLayout>
