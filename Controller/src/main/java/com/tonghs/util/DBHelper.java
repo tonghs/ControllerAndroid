@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name VARCHAR, " +
                 "ip VARCHAR," +
+                "port int," +
                 "fun1 VARCHAR," +
                 "fun2 VARCHAR," +
                 "fun3 VARCHAR," +
