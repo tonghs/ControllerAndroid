@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
+        classpath 'com.android.tools.build:gradle:0.6.+'
     }
 }
 apply plugin: 'android'
@@ -14,12 +14,25 @@ repositories {
 
 android {
     compileSdkVersion 17
-    buildToolsVersion '17.0.0'
+    buildToolsVersion "17.0.0"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 16
+        targetSdkVersion 17
+    }
+    buildTypes {
+        release {
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+        }
+    }
+    productFlavors {
+        defaultFlavor {
+            proguardFile 'proguard-rules.txt'
+        }
     }
 }
 
-dependencies {}
+dependencies {
+	compile 'com.android.support:appcompat-v7:+'
+}
