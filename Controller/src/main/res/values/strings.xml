@@ -4,7 +4,8 @@
     <string name="app_name">Controller</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="selection">请选择模块：</string>
+    <string name="selection_module">请选择模块：</string>
+    <string name="selection_area">请选择区域：</string>
     <string name="on">开</string>
     <string name="off">关</string>
 
