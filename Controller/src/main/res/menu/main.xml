@@ -1,6 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_add_module"
+        android:title="@string/action_add_module"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_add_area"
+        android:title="@string/action_add_area"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_module_mg"
+        android:title="@string/action_module_mg"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item android:id="@+id/action_area_mg"
+        android:title="@string/action_area_mg"
         android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>
