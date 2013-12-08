@@ -1,11 +1,13 @@
 package com.tonghs;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -150,6 +152,40 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        //得到当前选中的MenuItem的ID,
+        int item_id = item.getItemId();
+        /* 新建一个Intent对象 */
+        Intent intent = new Intent();
+        switch (item_id)
+        {
+            case R.id.action_add_module:
+				/* 指定intent要启动的类 */
+                intent.setClass(MainActivity.this, AddModuleActivity.class);
+                break;
+            case R.id.action_add_area:
+				/* 指定intent要启动的类 */
+                intent.setClass(MainActivity.this, AddAreaActivity.class);
+                break;
+            case R.id.action_module_mg:
+                /* 指定intent要启动的类 */
+                intent.setClass(MainActivity.this, ModuleMgrActivity.class);
+                break;
+            case R.id.action_area_mg:
+                /* 指定intent要启动的类 */
+                intent.setClass(MainActivity.this, AreaMgrActivity.class);
+                break;
+        }
+
+        /* 启动一个新的Activity */
+        startActivity(intent);
+//		/* 关闭当前的Activity */
+//        this.finish();
         return true;
     }
 

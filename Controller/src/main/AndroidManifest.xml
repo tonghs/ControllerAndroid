@@ -22,6 +22,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.tonghs.AddModuleActivity"
+            android:label="@string/action_add_module"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
+        <activity
+            android:name="com.tonghs.AddAreaActivity"
+            android:label="@string/action_add_area"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
+        <activity
+            android:name="com.tonghs.ModuleMgrActivity"
+            android:label="@string/action_module_mg"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
+        <activity
+            android:name="com.tonghs.AreaMgrActivity"
+            android:label="@string/action_area_mg"
+            android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
