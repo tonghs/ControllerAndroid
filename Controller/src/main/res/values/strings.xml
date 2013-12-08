@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Controller</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">手机控制端</string>
+    <string name="action_add_module">添加模块</string>
+    <string name="action_add_area">添加区域</string>
+    <string name="action_module_mg">模块管理</string>
+    <string name="action_area_mg">区域管理</string>
     <string name="hello_world">Hello world!</string>
     <string name="selection_module">请选择模块：</string>
     <string name="selection_area">请选择区域：</string>
