@@ -24,7 +24,7 @@
 
             <Spinner
                 android:id="@+id/areas"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"/>
         </LinearLayout>
@@ -40,7 +40,7 @@
 
             <Spinner
                 android:id="@+id/modules"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"/>
         </LinearLayout>
@@ -51,7 +51,7 @@
             android:orientation="horizontal">
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能1"
@@ -64,7 +64,7 @@
             android:orientation="horizontal">
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能2"
@@ -77,7 +77,7 @@
             android:orientation="horizontal">
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能3"
@@ -90,7 +90,7 @@
             android:orientation="horizontal">
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能4"
@@ -103,7 +103,7 @@
             android:orientation="horizontal">
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能5"
@@ -116,7 +116,7 @@
             android:orientation="horizontal">
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能6"
