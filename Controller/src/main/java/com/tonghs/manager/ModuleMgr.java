@@ -51,6 +51,7 @@ public class ModuleMgr {
         ContentValues cv = new ContentValues();
         cv.put("name", module.getName());
         cv.put("ip", module.getIp());
+        cv.put("port", module.getPort());
         cv.put("fun1", module.getFun1());
         cv.put("fun2", module.getFun2());
         cv.put("fun3", module.getFun3());
@@ -88,6 +89,7 @@ public class ModuleMgr {
             module.setId(c.getInt(c.getColumnIndex("id")));
             module.setName(c.getString(c.getColumnIndex("name")));
             module.setIp(c.getString(c.getColumnIndex("ip")));
+            module.setPort(c.getInt(c.getColumnIndex("port")));
             module.setFun1(c.getString(c.getColumnIndex("fun1")));
             module.setFun2(c.getString(c.getColumnIndex("fun2")));
             module.setFun3(c.getString(c.getColumnIndex("fun3")));

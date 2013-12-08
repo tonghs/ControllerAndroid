@@ -1,7 +1,11 @@
 package com.tonghs;
 
+import android.app.AlertDialog;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,14 +16,23 @@ import android.widget.Switch;
 import com.tonghs.manager.AreaMgr;
 import com.tonghs.manager.ModuleMgr;
 import com.tonghs.model.Area;
+import com.tonghs.model.MessageUtil;
 import com.tonghs.model.Module;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
 
 public class MainActivity extends Activity {
 
     AreaMgr am;
     ModuleMgr mm;
+    Socket clientSocket;
+    private ReceiveThread mReceiveThread = null;
+    private ServerSocket mServerSocket = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +44,7 @@ public class MainActivity extends Activity {
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
 
         List<Area> listArea = am.getAreas();
+        am.closeDB();
 
         if(listArea != null && listArea.size() > 0){
 
@@ -48,6 +62,7 @@ public class MainActivity extends Activity {
 
                     // 绑定模块
                     List<Module> listModule = mm.getModulesByArea(id);
+                    mm.closeDB();
                     ArrayAdapter<Module> adapter = new ArrayAdapter<Module>(getBaseContext(),
                             android.R.layout.simple_spinner_item, listModule);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -72,18 +87,20 @@ public class MainActivity extends Activity {
                     Switch fun4 = (Switch)findViewById(R.id.fun4);
                     Switch fun5 = (Switch)findViewById(R.id.fun5);
                     Switch fun6 = (Switch)findViewById(R.id.fun6);
-
+                    //设置功能名
                     fun1.setText(module.getFun1());
                     fun2.setText(module.getFun2());
                     fun3.setText(module.getFun3());
                     fun4.setText(module.getFun4());
                     fun5.setText(module.getFun5());
                     fun6.setText(module.getFun6());
-
+                    //获取ip
                     String ip = module.getIp();
+                    int port = module.getPort();
+                    //获取请求报文
+                    byte[] msg = new MessageUtil().getRequestMsg();
+                    send(ip, port, msg);
 
-//                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-//                    dialog.setTitle(String.valueOf(ip)).show();
                 }
 
                 @Override
@@ -94,7 +111,6 @@ public class MainActivity extends Activity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -102,15 +118,146 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    public void onOnBtnClick(View v) {
-        int index = Integer.parseInt(v.getTag().toString());
-//        AlertDialog.Builder dialog=new AlertDialog.Builder(MainActivity.this);
-//        dialog.setTitle(String.valueOf(index)).show();
+    public void alert(String msg){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle(msg).show();
     }
 
-
-    public void onOffBtnClick(View v) {
-
+    /**
+     * send data to module
+     * @param ip
+     * @param port
+     * @param msg
+     */
+    public void send(String ip, int port, byte[] msg){
+        SendHandler handler = new SendHandler(ip, port, msg);
+        new Thread(handler).start();
     }
-    
+
+    /**
+     * send data runnable implement
+     */
+    public class SendHandler implements Runnable{
+        public String ip;
+        public int port;
+        public byte[] msg;
+
+        public SendHandler(String ip, int port, byte[] msg){
+            this.ip = ip;
+            this.port = port;
+            this.msg = msg;
+        }
+
+        @Override
+        public void run() {
+            try
+            {
+                //实例化对象并连接到服务器
+                clientSocket = new Socket(ip, port);
+                OutputStream outStream = clientSocket.getOutputStream();
+                outStream.write(msg);
+
+                mReceiveThread = new ReceiveThread(clientSocket);
+                //开启线程
+                mReceiveThread.start();
+            }
+            catch (Exception e)
+            {
+                alert("连接失败");
+            }
+
+        }
+    }
+
+    public Handler mHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            byte[] m = msg.getData().getByteArray("msg");
+
+            MessageUtil mu = new MessageUtil();
+            Switch fun1 = (Switch)findViewById(R.id.fun1);
+            Switch fun2 = (Switch)findViewById(R.id.fun2);
+            Switch fun3 = (Switch)findViewById(R.id.fun3);
+            Switch fun4 = (Switch)findViewById(R.id.fun4);
+            Switch fun5 = (Switch)findViewById(R.id.fun5);
+            Switch fun6 = (Switch)findViewById(R.id.fun6);
+            if(m != null){
+                //设置状态
+                fun1.setChecked(mu.GetStatus(m, 0));
+                fun2.setChecked(mu.GetStatus(m, 0));
+                fun3.setChecked(mu.GetStatus(m, 0));
+                fun4.setChecked(mu.GetStatus(m, 0));
+                fun5.setChecked(mu.GetStatus(m, 0));
+                fun6.setChecked(mu.GetStatus(m, 0));
+            } else{
+                //设置功能名
+                String text = "获取超时";
+                fun1.setText(text);
+                fun2.setText(text);
+                fun3.setText(text);
+                fun4.setText(text);
+                fun5.setText(text);
+                fun6.setText(text);
+            }
+        }
+    };
+
+    /**
+     * receive data
+     */
+    private class ReceiveThread extends Thread
+    {
+        private InputStream mInputStream = null;
+        private byte[] buf ;
+        private boolean stop = false;
+
+        ReceiveThread(Socket s)
+        {
+            try {
+                s.setSoTimeout(9000);
+                //获得输入流
+                this.mInputStream = s.getInputStream();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void run()
+        {
+            while(!stop)
+            {
+                this.buf = new byte[16];
+
+                //读取输入的数据(阻塞读)
+                try {
+                    this.mInputStream.read(buf);
+                } catch (Exception e1) {
+                    stop = true;
+                    //读取超时
+                    Bundle bundle = new Bundle();
+                    bundle.putByteArray("msg", null);
+                    Message m = new Message();
+                    m.setData(bundle);
+                    mHandler.sendMessage(m);
+                }
+                if (buf != null && buf.length > 0 && buf[0] == (byte)0xAA &&
+                        buf[1] == 0x55 && buf[14] == (byte)0xcc && buf[15] == (byte)0xdd){
+                    //报文验证成功
+                    stop = true;
+                    Bundle bundle = new Bundle();
+                    bundle.putByteArray("msg", buf);
+                    Message m = new Message();
+                    m.setData(bundle);
+                    mHandler.sendMessage(m);
+                }
+            }
+        }
+    }
 }
+
+

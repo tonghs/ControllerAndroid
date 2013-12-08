@@ -7,6 +7,7 @@ public class Module {
     private int id;
     private String name;
     private String ip;
+    int port;
     private String fun1;
     private String fun2;
     private String fun3;
@@ -43,6 +44,14 @@ public class Module {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public String getFun1() {
