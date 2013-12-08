@@ -1,7 +1,6 @@
 package com.tonghs;
 
 import android.app.AlertDialog;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
@@ -10,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -32,6 +32,14 @@ public class MainActivity extends Activity {
     Socket clientSocket;
     private ReceiveThread mReceiveThread = null;
     private ServerSocket mServerSocket = null;
+    Switch fun1;
+    Switch fun2;
+    Switch fun3;
+    Switch fun4;
+    Switch fun5;
+    Switch fun6;
+    String ip;
+    int port;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +47,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         am = new AreaMgr(this);
         mm = new ModuleMgr(this);
-
+        getSwitch();
         final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
 
         List<Area> listArea = am.getAreas();
-        am.closeDB();
 
         if(listArea != null && listArea.size() > 0){
 
@@ -62,7 +69,6 @@ public class MainActivity extends Activity {
 
                     // 绑定模块
                     List<Module> listModule = mm.getModulesByArea(id);
-                    mm.closeDB();
                     ArrayAdapter<Module> adapter = new ArrayAdapter<Module>(getBaseContext(),
                             android.R.layout.simple_spinner_item, listModule);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -80,13 +86,6 @@ public class MainActivity extends Activity {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     Module module = (Module) spinnerModule.getSelectedItem();
-
-                    Switch fun1 = (Switch)findViewById(R.id.fun1);
-                    Switch fun2 = (Switch)findViewById(R.id.fun2);
-                    Switch fun3 = (Switch)findViewById(R.id.fun3);
-                    Switch fun4 = (Switch)findViewById(R.id.fun4);
-                    Switch fun5 = (Switch)findViewById(R.id.fun5);
-                    Switch fun6 = (Switch)findViewById(R.id.fun6);
                     //设置功能名
                     fun1.setText(module.getFun1());
                     fun2.setText(module.getFun2());
@@ -95,8 +94,8 @@ public class MainActivity extends Activity {
                     fun5.setText(module.getFun5());
                     fun6.setText(module.getFun6());
                     //获取ip
-                    String ip = module.getIp();
-                    int port = module.getPort();
+                    ip = module.getIp();
+                    port = module.getPort();
                     //获取请求报文
                     byte[] msg = new MessageUtil().getRequestMsg();
                     send(ip, port, msg);
@@ -109,6 +108,42 @@ public class MainActivity extends Activity {
                 }
             });
         }
+    }
+
+    public CompoundButton.OnCheckedChangeListener switchHandler = new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int index = Integer.parseInt(buttonView.getTag().toString()) - 1;
+            byte[] msg = new MessageUtil().getControlMsg(ip, isChecked, index);
+            send(ip, port, msg);
+        }
+    };
+
+    /**
+     * get switch and set listener
+     */
+    private void getSwitch(){
+        fun1 = (Switch)findViewById(R.id.fun1);
+        fun2 = (Switch)findViewById(R.id.fun2);
+        fun3 = (Switch)findViewById(R.id.fun3);
+        fun4 = (Switch)findViewById(R.id.fun4);
+        fun5 = (Switch)findViewById(R.id.fun5);
+        fun6 = (Switch)findViewById(R.id.fun6);
+
+        fun1.setOnCheckedChangeListener(switchHandler);
+        fun2.setOnCheckedChangeListener(switchHandler);
+        fun3.setOnCheckedChangeListener(switchHandler);
+        fun4.setOnCheckedChangeListener(switchHandler);
+        fun5.setOnCheckedChangeListener(switchHandler);
+        fun6.setOnCheckedChangeListener(switchHandler);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        am.closeDB();
+        mm.closeDB();
     }
 
     @Override
@@ -178,29 +213,23 @@ public class MainActivity extends Activity {
             byte[] m = msg.getData().getByteArray("msg");
 
             MessageUtil mu = new MessageUtil();
-            Switch fun1 = (Switch)findViewById(R.id.fun1);
-            Switch fun2 = (Switch)findViewById(R.id.fun2);
-            Switch fun3 = (Switch)findViewById(R.id.fun3);
-            Switch fun4 = (Switch)findViewById(R.id.fun4);
-            Switch fun5 = (Switch)findViewById(R.id.fun5);
-            Switch fun6 = (Switch)findViewById(R.id.fun6);
             if(m != null){
                 //设置状态
-                fun1.setChecked(mu.GetStatus(m, 0));
-                fun2.setChecked(mu.GetStatus(m, 0));
-                fun3.setChecked(mu.GetStatus(m, 0));
-                fun4.setChecked(mu.GetStatus(m, 0));
-                fun5.setChecked(mu.GetStatus(m, 0));
-                fun6.setChecked(mu.GetStatus(m, 0));
+                fun1.setChecked(mu.getStatus(m, 0));
+                fun2.setChecked(mu.getStatus(m, 1));
+                fun3.setChecked(mu.getStatus(m, 2));
+                fun4.setChecked(mu.getStatus(m, 3));
+                fun5.setChecked(mu.getStatus(m, 4));
+                fun6.setChecked(mu.getStatus(m, 5));
             } else{
-                //设置功能名
                 String text = "获取超时";
-                fun1.setText(text);
-                fun2.setText(text);
-                fun3.setText(text);
-                fun4.setText(text);
-                fun5.setText(text);
-                fun6.setText(text);
+//                fun1.setText(text);
+//                fun2.setText(text);
+//                fun3.setText(text);
+//                fun4.setText(text);
+//                fun5.setText(text);
+//                fun6.setText(text);
+                alert(text);
             }
         }
     };
@@ -217,7 +246,7 @@ public class MainActivity extends Activity {
         ReceiveThread(Socket s)
         {
             try {
-                s.setSoTimeout(9000);
+                s.setSoTimeout(4000);
                 //获得输入流
                 this.mInputStream = s.getInputStream();
             } catch (Exception e) {
@@ -254,6 +283,8 @@ public class MainActivity extends Activity {
                     Message m = new Message();
                     m.setData(bundle);
                     mHandler.sendMessage(m);
+                    String ip = clientSocket.getLocalAddress().toString();
+                    MessageUtil.currentStatus.put(ip, buf);
                 }
             }
         }

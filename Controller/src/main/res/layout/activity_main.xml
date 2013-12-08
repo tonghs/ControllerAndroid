@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能1"
+                android:tag="1"
                 android:id="@+id/fun1" />
 
         </LinearLayout>
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能2"
+                android:tag="2"
                 android:id="@+id/fun2" />
 
         </LinearLayout>
@@ -81,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能3"
+                android:tag="3"
                 android:id="@+id/fun3" />
 
         </LinearLayout>
@@ -94,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能4"
+                android:tag="4"
                 android:id="@+id/fun4" />
 
         </LinearLayout>
@@ -107,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能5"
+                android:tag="5"
                 android:id="@+id/fun5" />
 
         </LinearLayout>
@@ -120,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="功能6"
+                android:tag="6"
                 android:id="@+id/fun6" />
 
         </LinearLayout>

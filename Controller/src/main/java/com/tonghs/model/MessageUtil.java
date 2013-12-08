@@ -1,12 +1,14 @@
 package com.tonghs.model;
 
+import java.util.Hashtable;
+
 /**
  * Created by 华帅 on 13-12-8.
  */
 public class MessageUtil {
     private byte[] requestMsg;
     private byte[] controlMsg;
-
+    public static Hashtable<String, byte[]> currentStatus = new Hashtable<String, byte[]>();
 
     public byte[] getRequestMsg() {
         requestMsg = new byte[16];
@@ -76,9 +78,75 @@ public class MessageUtil {
         this.controlMsg = controlMsg;
     }
 
-    public boolean GetStatus(byte[] msg, int index)
+    /**
+     * get status from msg
+     * @param msg
+     * @param index
+     * @return
+     */
+    public boolean getStatus(byte[] msg, int index)
     {
+        int segment = index / 8;
+        int offset = index % 8;
 
-        return true;
+        byte b = msg[9 - segment];
+
+        int temp = (b << (32 - 1 - offset)) >> 31;
+
+        return temp == -1;
+    }
+
+    /**
+     * 生成控制报文
+     * @param isChecked
+     * @param index
+     * @return
+     */
+    public byte[] getControlMsg(String ip, boolean isChecked, int index){
+        byte[] msg = currentStatus.get(ip);
+
+        if(msg == null){
+            msg = this.getControlMsg();
+        }
+
+        String byteStr = byteToBit(msg[9 - index / 8]);
+        char[] temp = byteStr.toCharArray();
+        temp[7 - index % 8] = isChecked ? '1' : '0';
+        byteStr = String.valueOf(temp);
+        msg[9 - index / 8] = decodeBinaryString(byteStr);
+
+        return msg;
+    }
+
+    public String byteToBit(byte b) {
+        return ""
+                + (byte) ((b >> 7) & 0x1) + (byte) ((b >> 6) & 0x1)
+                + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 4) & 0x1)
+                + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 2) & 0x1)
+                + (byte) ((b >> 1) & 0x1) + (byte) ((b >> 0) & 0x1);
+    }
+
+    /**
+     * 二进制字符串转byte
+     */
+    public byte decodeBinaryString(String byteStr) {
+        int re, len;
+        if (null == byteStr) {
+            return 0;
+        }
+        len = byteStr.length();
+        if (len != 4 && len != 8) {
+            return 0;
+        }
+        if (len == 8) {// 8 bit处理
+            if (byteStr.charAt(0) == '0') {// 正数
+                re = Integer.parseInt(byteStr, 2);
+            } else {// 负数
+                re = Integer.parseInt(byteStr, 2) - 256;
+            }
+        } else {// 4 bit处理
+            re = Integer.parseInt(byteStr, 2);
+        }
+        return (byte) re;
     }
 }
