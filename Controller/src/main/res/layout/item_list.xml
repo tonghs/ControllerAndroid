@@ -21,13 +21,29 @@
         android:fontFamily="sans-serif-light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:paddingTop="10dp"
         android:text="tes"/>
 
     <Button
+        android:id="@+id/btn_mod_area"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="15dp"
+        android:padding="0dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:onClick="btnModClick"
+        android:layout_marginRight="70dp"
         android:text="修 改"/>
+
+    <Button
+        android:id="@+id/btn_del_area"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="15dp"
+        android:padding="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="btnDelClick"
+        android:text="删 除"/>
 </RelativeLayout >

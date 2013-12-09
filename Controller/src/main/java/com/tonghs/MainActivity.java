@@ -292,7 +292,7 @@ public class MainActivity extends Activity {
         ReceiveThread(Socket s)
         {
             try {
-                s.setSoTimeout(4000);
+                s.setSoTimeout(1000);
                 //获得输入流
                 this.mInputStream = s.getInputStream();
             } catch (Exception e) {
