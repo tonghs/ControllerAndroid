@@ -1,17 +1,20 @@
 package com.tonghs;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -96,7 +99,8 @@ public class AreaMgrActivity extends ActionBarActivity {
                         area.setName(areaName);
                         new AreaMgr(AreaMgrActivity.this).update(area);
                         bindData();
-
+                        InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(txtAreaName.getWindowToken(), 0);
                         alert("修改成功");
                     }
                 }).setNegativeButton("否", null).show();
