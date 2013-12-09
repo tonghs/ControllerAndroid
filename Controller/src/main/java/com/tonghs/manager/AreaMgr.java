@@ -32,7 +32,7 @@ public class AreaMgr {
     public void add(Area area) {
         db.beginTransaction();	//开始事务
         try {
-            db.execSQL("INSERT INTO area (name) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+            db.execSQL("INSERT INTO area (name) VALUES(?)",
                     new Object[]{area.getName()});
             db.setTransactionSuccessful();	//设置事务成功完成
         } finally {

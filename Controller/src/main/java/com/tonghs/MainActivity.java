@@ -29,6 +29,8 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+    static final int SEND_SMS_REQUEST = 0;
+    static final int RESULT_OK = 1;
     AreaMgr am;
     ModuleMgr mm;
     Socket clientSocket;
@@ -112,6 +114,7 @@ public class MainActivity extends Activity {
         }
     }
 
+
     public CompoundButton.OnCheckedChangeListener switchHandler = new CompoundButton.OnCheckedChangeListener() {
 
         @Override
@@ -183,10 +186,23 @@ public class MainActivity extends Activity {
         }
 
         /* 启动一个新的Activity */
-        startActivity(intent);
-//		/* 关闭当前的Activity */
-//        this.finish();
+        startActivityForResult(intent, SEND_SMS_REQUEST);
+
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
+        List<Area> listArea = am.getAreas();
+
+        if(listArea != null){
+
+            ArrayAdapter<Area> adapter = new ArrayAdapter<Area>(this,
+                    android.R.layout.simple_spinner_item, listArea);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerArea.setAdapter(adapter);
+        }
     }
 
     public void alert(String msg){
@@ -259,12 +275,6 @@ public class MainActivity extends Activity {
                 fun6.setChecked(mu.getStatus(m, 5));
             } else{
                 String text = "获取超时";
-//                fun1.setText(text);
-//                fun2.setText(text);
-//                fun3.setText(text);
-//                fun4.setText(text);
-//                fun5.setText(text);
-//                fun6.setText(text);
                 alert(text);
             }
         }
