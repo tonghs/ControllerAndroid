@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,19 +24,20 @@ import com.tonghs.model.Module;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.List;
 
 public class MainActivity extends Activity {
 
     static final int SEND_SMS_REQUEST = 0;
-    static final int RESULT_OK = 1;
+    static final int TIME_OUT = 1000;
     AreaMgr am;
     ModuleMgr mm;
     Socket clientSocket;
     private ReceiveThread mReceiveThread = null;
-    private ServerSocket mServerSocket = null;
     Switch fun1;
     Switch fun2;
     Switch fun3;
@@ -252,7 +254,9 @@ public class MainActivity extends Activity {
             try
             {
                 //实例化对象并连接到服务器
-                clientSocket = new Socket(ip, port);
+                clientSocket = new Socket();
+                SocketAddress socAddress = new InetSocketAddress(ip, port);
+                clientSocket.connect(socAddress, TIME_OUT);
                 OutputStream outStream = clientSocket.getOutputStream();
                 outStream.write(msg);
 
@@ -262,7 +266,11 @@ public class MainActivity extends Activity {
             }
             catch (Exception e)
             {
-                alert("连接失败");
+                Bundle bundle = new Bundle();
+                bundle.putString("msg", "连接失败");
+                Message m = new Message();
+                m.setData(bundle);
+                alertHandler.sendMessage(m);
             }
 
         }
@@ -292,6 +300,17 @@ public class MainActivity extends Activity {
         }
     };
 
+    public Handler alertHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            String m = msg.getData().getString("msg");
+            alert(m);
+        }
+    };
+
     /**
      * receive data
      */
@@ -304,7 +323,7 @@ public class MainActivity extends Activity {
         ReceiveThread(Socket s)
         {
             try {
-                s.setSoTimeout(1000);
+                s.setSoTimeout(TIME_OUT);
                 //获得输入流
                 this.mInputStream = s.getInputStream();
             } catch (Exception e) {
