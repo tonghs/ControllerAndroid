@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,17 @@ public class AddAreaActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_area);
+        EditText txtAreaName = (EditText)findViewById(R.id.txt_area_name);
+        txtAreaName.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == keyEvent.KEYCODE_ENTER){
+                    addArea();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -47,6 +59,10 @@ public class AddAreaActivity extends ActionBarActivity {
     }
 
     public void btnAddAreaClick(View v){
+
+    }
+
+    public void addArea(){
         EditText txtAreaName = (EditText)findViewById(R.id.txt_area_name);
         String text = txtAreaName.getText().toString();
         AreaMgr am = new AreaMgr(getBaseContext());
