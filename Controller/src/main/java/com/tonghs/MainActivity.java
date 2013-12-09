@@ -194,6 +194,7 @@ public class MainActivity extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
+        final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
         List<Area> listArea = am.getAreas();
 
         if(listArea != null){
@@ -202,6 +203,17 @@ public class MainActivity extends Activity {
                     android.R.layout.simple_spinner_item, listArea);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerArea.setAdapter(adapter);
+
+            Area area = (Area) spinnerArea.getSelectedItem();
+            int id = area.getId();
+
+            // 绑定模块
+            List<Module> listModule = mm.getModulesByArea(id);
+            ArrayAdapter<Module> adapterModule = new ArrayAdapter<Module>(getBaseContext(),
+                    android.R.layout.simple_spinner_item, listModule);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerModule.setAdapter(adapter);
+
         }
     }
 
