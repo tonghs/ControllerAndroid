@@ -83,12 +83,33 @@ public class AreaMgr {
         return areas;
     }
 
+    public Area getAreaById(int areaId){
+        Area area = new Area();
+        Cursor c = queryTheCursorById(areaId);
+        while (c.moveToNext()) {
+            area.setId(c.getInt(c.getColumnIndex("id")));
+            area.setName(c.getString(c.getColumnIndex("name")));
+            break;
+        }
+        c.close();
+        return area;
+    }
+
     /**
      * query all persons, return cursor
      * @return	Cursor
      */
     public Cursor queryTheCursor() {
         Cursor c = db.rawQuery("SELECT * FROM area", null);
+        return c;
+    }
+
+    /**
+     * query all persons, return cursor
+     * @return	Cursor
+     */
+    public Cursor queryTheCursorById(int id) {
+        Cursor c = db.rawQuery(String.format("SELECT * FROM area where id = %d", id), null);
         return c;
     }
 

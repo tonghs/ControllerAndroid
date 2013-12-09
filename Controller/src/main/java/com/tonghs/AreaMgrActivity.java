@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class AreaMgrActivity extends ActionBarActivity {
     int areaId;
+    EditText txtAreaName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +81,32 @@ public class AreaMgrActivity extends ActionBarActivity {
     }
 
     public void btnModClick(View v){
+        txtAreaName = new EditText(this);
         Button btnMod = (Button)v;
-        int areaId = Integer.parseInt(btnMod.getTag().toString());
+        areaId = Integer.parseInt(btnMod.getTag().toString());
+        txtAreaName.setText(new AreaMgr(AreaMgrActivity.this).getAreaById(areaId).getName());
+
+        new AlertDialog.Builder(this).setTitle("请输入区域名").setIcon(android.R.drawable.ic_dialog_info)
+                .setView(txtAreaName)
+                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String areaName = txtAreaName.getText().toString();
+                        Area area = new Area();
+                        area.setId(areaId);
+                        area.setName(areaName);
+                        new AreaMgr(AreaMgrActivity.this).update(area);
+                        bindData();
+
+                        alert("修改成功");
+                    }
+                }).setNegativeButton("否", null).show();
     }
 
     public void btnDelClick(View v){
         Button btnMod = (Button)v;
         areaId = Integer.parseInt(btnMod.getTag().toString());
 
-        new  AlertDialog.Builder(this).setTitle("确认").setMessage("确定删除吗？")
+        new AlertDialog.Builder(this).setTitle("确认").setMessage("确定删除吗？")
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         new AreaMgr(AreaMgrActivity.this).delete(areaId);
