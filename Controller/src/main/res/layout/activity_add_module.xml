@@ -42,6 +42,8 @@
                 android:id="@+id/txt_module_name"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="模块名"/>
         </LinearLayout>
         <LinearLayout
@@ -58,6 +60,8 @@
                 android:id="@+id/txt_module_ip"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="请输入IP"/>
         </LinearLayout>
         <LinearLayout
@@ -68,12 +72,15 @@
                 android:layout_height="wrap_content"
                 android:layout_width="70dp"
                 android:gravity="right"
-                android:inputType="number"
+
                 android:text="端口*"/>
             <EditText
                 android:id="@+id/txt_module_port"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:inputType="number"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="请输入端口"/>
         </LinearLayout>
         <LinearLayout
@@ -89,6 +96,8 @@
                 android:id="@+id/txt_module_fun1"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="功能1"/>
         </LinearLayout>
 
@@ -105,6 +114,8 @@
                 android:id="@+id/txt_module_fun2"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="功能2"/>
         </LinearLayout>
 
@@ -121,6 +132,8 @@
                 android:id="@+id/txt_module_fun3"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="功能3"/>
         </LinearLayout>
 
@@ -137,6 +150,8 @@
                 android:id="@+id/txt_module_fun4"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="功能4"/>
         </LinearLayout>
 
@@ -153,6 +168,8 @@
                 android:id="@+id/txt_module_fun5"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:hint="功能5"/>
         </LinearLayout>
 
@@ -169,6 +186,8 @@
                 android:id="@+id/txt_module_fun6"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:hint="功能6"/>
         </LinearLayout>
 

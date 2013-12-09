@@ -1,16 +1,19 @@
 package com.tonghs;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -39,7 +42,17 @@ public class AddModuleActivity extends ActionBarActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerArea.setAdapter(adapter);
         }
-
+        EditText txtFun6 = (EditText)findViewById(R.id.txt_module_fun6);
+        txtFun6.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                    addModule();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -61,6 +74,10 @@ public class AddModuleActivity extends ActionBarActivity {
     }
 
     public void btnAddModuleClick(View v){
+        addModule();
+    }
+
+    public void addModule(){
         Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
         EditText txtName = (EditText)findViewById(R.id.txt_module_name);
         EditText txtIP = (EditText)findViewById(R.id.txt_module_ip);
@@ -102,5 +119,7 @@ public class AddModuleActivity extends ActionBarActivity {
             mm.add(module);
             alert("添加成功");
         }
+        InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(txtName.getWindowToken(), 0);
     }
 }
