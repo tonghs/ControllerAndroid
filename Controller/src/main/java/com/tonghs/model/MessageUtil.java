@@ -29,6 +29,7 @@ public class MessageUtil {
         //继电器及开关
         requestMsg[8] = 0x00;
         requestMsg[9] = 0x00;
+
         requestMsg[10] = 0x00;
         requestMsg[11] = 0x00;
 
@@ -63,6 +64,7 @@ public class MessageUtil {
         //继电器及开关
         controlMsg[8] = 0x00;
         controlMsg[9] = 0x00;
+
         controlMsg[10] = 0x00;
         controlMsg[11] = 0x00;
 
