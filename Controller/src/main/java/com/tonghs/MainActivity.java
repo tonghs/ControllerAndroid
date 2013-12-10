@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,18 +20,17 @@ import com.tonghs.manager.ModuleMgr;
 import com.tonghs.model.Area;
 import com.tonghs.model.MessageUtil;
 import com.tonghs.model.Module;
+import com.tonghs.util.RequestCode;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.List;
 
 public class MainActivity extends Activity {
 
-    static final int SEND_SMS_REQUEST = 0;
     static final int TIME_OUT = 1000;
     AreaMgr am;
     ModuleMgr mm;
@@ -171,6 +169,9 @@ public class MainActivity extends Activity {
         {
             case R.id.action_add_module:
 				/* 指定intent要启动的类 */
+                Bundle bundle=new  Bundle();
+                bundle.putInt("requestCode", RequestCode.SEND_SMS_ADD);
+                intent.putExtras(bundle);
                 intent.setClass(MainActivity.this, AddModuleActivity.class);
                 break;
             case R.id.action_add_area:
@@ -188,7 +189,7 @@ public class MainActivity extends Activity {
         }
 
         /* 启动一个新的Activity */
-        startActivityForResult(intent, SEND_SMS_REQUEST);
+        startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
 
         return true;
     }

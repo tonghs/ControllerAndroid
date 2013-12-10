@@ -199,7 +199,7 @@
                 android:id="@+id/btn_add_module"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="添 加"
+                android:text="确 定"
                 android:layout_gravity="right"
                 android:onClick="btnAddModuleClick"/>
 

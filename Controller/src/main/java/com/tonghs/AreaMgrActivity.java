@@ -56,7 +56,7 @@ public class AreaMgrActivity extends ActionBarActivity {
 
             MySimpleAdapter adapter = new MySimpleAdapter(AreaMgrActivity.this, list,
                     R.layout.item_list, new String[]{"id", "name"},
-                    new int[]{R.id.area_id, R.id.area_name});
+                    new int[]{R.id.id, R.id.name});
             ListView lv = new ListView(AreaMgrActivity.this);
             lv.setAdapter(adapter);
             mLayout.addView(lv);
@@ -107,8 +107,8 @@ public class AreaMgrActivity extends ActionBarActivity {
     }
 
     public void btnDelClick(View v){
-        Button btnMod = (Button)v;
-        areaId = Integer.parseInt(btnMod.getTag().toString());
+        Button btnDel = (Button)v;
+        areaId = Integer.parseInt(btnDel.getTag().toString());
 
         new AlertDialog.Builder(this).setTitle("确认").setMessage("确定删除吗？")
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {

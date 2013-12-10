@@ -24,11 +24,16 @@ public class MySimpleAdapter extends SimpleAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v= super.getView(position, convertView, parent);
-        Button btnMod = (Button)v.findViewById(R.id.btn_mod_area);
-        Button btnDel = (Button)v.findViewById(R.id.btn_del_area);
-        TextView txtAreaId = (TextView)v.findViewById(R.id.area_id);
-        btnMod.setTag(txtAreaId.getText().toString());
-        btnDel.setTag(txtAreaId.getText().toString());
+        Button btnMod = (Button)v.findViewById(R.id.btn_mod);
+        Button btnDel = (Button)v.findViewById(R.id.btn_del);
+        Button btnView = (Button)v.findViewById(R.id.btn_view);
+        TextView txtId = (TextView)v.findViewById(R.id.id);
+        btnMod.setTag(txtId.getText().toString());
+        btnDel.setTag(txtId.getText().toString());
+
+        if (btnView != null){
+            btnView.setTag(txtId.getText().toString());
+        }
 
         return v;
     }

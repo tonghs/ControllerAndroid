@@ -103,12 +103,43 @@ public class ModuleMgr {
         return modules;
     }
 
+
+    public Module getModuleById(int id) {
+        Module module = new Module();
+        Cursor c = queryTheCursorById(id);
+        while (c.moveToNext()) {
+            module.setId(c.getInt(c.getColumnIndex("id")));
+            module.setName(c.getString(c.getColumnIndex("name")));
+            module.setIp(c.getString(c.getColumnIndex("ip")));
+            module.setPort(c.getInt(c.getColumnIndex("port")));
+            module.setFun1(c.getString(c.getColumnIndex("fun1")));
+            module.setFun2(c.getString(c.getColumnIndex("fun2")));
+            module.setFun3(c.getString(c.getColumnIndex("fun3")));
+            module.setFun4(c.getString(c.getColumnIndex("fun4")));
+            module.setFun5(c.getString(c.getColumnIndex("fun5")));
+            module.setFun6(c.getString(c.getColumnIndex("fun6")));
+            module.setAreaId(c.getInt(c.getColumnIndex("areaId")));
+            break;
+        }
+        c.close();
+        return module;
+    }
+
     /**
-     * query all persons, return cursor
+     * query all module, return cursor
      * @return	Cursor
      */
     public Cursor queryTheCursor(int areaId) {
         Cursor c = db.rawQuery(String.format("SELECT * FROM module where areaId = %d", areaId), null);
+        return c;
+    }
+
+    /**
+     * query module, return cursor
+     * @return	Cursor
+     */
+    public Cursor queryTheCursorById(int id) {
+        Cursor c = db.rawQuery(String.format("SELECT * FROM module where id = %d", id), null);
         return c;
     }
 
