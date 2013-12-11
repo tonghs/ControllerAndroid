@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.tonghs.manager.AreaMgr;
 import com.tonghs.manager.ModuleMgr;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    static final int TIME_OUT = 1000;
+    static final int TIME_OUT = 4000;
     AreaMgr am;
     ModuleMgr mm;
     Socket clientSocket;
@@ -42,6 +43,14 @@ public class MainActivity extends Activity {
     Switch fun4;
     Switch fun5;
     Switch fun6;
+    TextView lblEp1;
+    TextView lblEp2;
+    TextView lblEp3;
+    TextView lblEp4;
+    TextView lblEp5;
+    TextView lblEp6;
+    TextView lblEp7;
+    TextView lblEp8;
     String ip;
     int port;
 
@@ -51,7 +60,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         am = new AreaMgr(this);
         mm = new ModuleMgr(this);
-        getSwitch();
+        getCmp();
         final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
 
@@ -128,7 +137,7 @@ public class MainActivity extends Activity {
     /**
      * get switch and set listener
      */
-    private void getSwitch(){
+    private void getCmp(){
         fun1 = (Switch)findViewById(R.id.fun1);
         fun2 = (Switch)findViewById(R.id.fun2);
         fun3 = (Switch)findViewById(R.id.fun3);
@@ -142,6 +151,15 @@ public class MainActivity extends Activity {
         fun4.setOnCheckedChangeListener(switchHandler);
         fun5.setOnCheckedChangeListener(switchHandler);
         fun6.setOnCheckedChangeListener(switchHandler);
+
+        lblEp1 = (TextView)findViewById(R.id.lbl_ep1);
+        lblEp2 = (TextView)findViewById(R.id.lbl_ep2);
+        lblEp3 = (TextView)findViewById(R.id.lbl_ep3);
+        lblEp4 = (TextView)findViewById(R.id.lbl_ep4);
+        lblEp5 = (TextView)findViewById(R.id.lbl_ep5);
+        lblEp6 = (TextView)findViewById(R.id.lbl_ep6);
+        lblEp7 = (TextView)findViewById(R.id.lbl_ep7);
+        lblEp8 = (TextView)findViewById(R.id.lbl_ep8);
     }
 
     @Override
@@ -294,6 +312,17 @@ public class MainActivity extends Activity {
                 fun4.setChecked(mu.getStatus(m, 3));
                 fun5.setChecked(mu.getStatus(m, 4));
                 fun6.setChecked(mu.getStatus(m, 5));
+
+                int[] status = mu.getEpStatus(m);
+                lblEp1.setBackgroundColor(getResources().getColor(status[0] == 1 ? R.color.red : R.color.green));
+                lblEp2.setBackgroundColor(getResources().getColor(status[1] == 1 ? R.color.red : R.color.green));
+                lblEp3.setBackgroundColor(getResources().getColor(status[2] == 1 ? R.color.red : R.color.green));
+                lblEp4.setBackgroundColor(getResources().getColor(status[3] == 1 ? R.color.red : R.color.green));
+                lblEp5.setBackgroundColor(getResources().getColor(status[4] == 1 ? R.color.red : R.color.green));
+                lblEp6.setBackgroundColor(getResources().getColor(status[5] == 1 ? R.color.red : R.color.green));
+                lblEp7.setBackgroundColor(getResources().getColor(status[6] == 1 ? R.color.red : R.color.green));
+                lblEp8.setBackgroundColor(getResources().getColor(status[7] == 1 ? R.color.red : R.color.green));
+
             } else{
                 String text = "获取超时";
                 alert(text);

@@ -29,8 +29,9 @@ public class MessageUtil {
         //继电器及开关
         requestMsg[8] = 0x00;
         requestMsg[9] = 0x00;
-
+        //电位
         requestMsg[10] = 0x00;
+
         requestMsg[11] = 0x00;
 
         requestMsg[12] = 0x00;
@@ -65,7 +66,9 @@ public class MessageUtil {
         controlMsg[8] = 0x00;
         controlMsg[9] = 0x00;
 
+        //电位
         controlMsg[10] = 0x00;
+
         controlMsg[11] = 0x00;
 
         controlMsg[12] = 0x00;
@@ -93,9 +96,27 @@ public class MessageUtil {
 
         byte b = msg[9 - segment];
 
-        int temp = (b << (32 - 1 - offset)) >> 31;
+        int temp = (b << (31 - offset)) >> 31;
 
         return temp == -1;
+    }
+
+    /**
+     * 获取电位状态
+     * @param msg
+     * @return
+     */
+    public int[] getEpStatus(byte[] msg){
+        int[] status = new int[8];
+        byte b = msg[10];
+
+        for(int i = 0; i < 8; i++){
+            int temp = (b << (31 - i)) >> 31;
+
+            status[i] = temp == -1 ? 1 : 0;
+        }
+
+        return status;
     }
 
     /**
