@@ -4,16 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,7 +71,7 @@ public class AddModuleActivity extends ActionBarActivity {
         txtFun6.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP){
                     ((Button)findViewById(R.id.btn_add_module)).performClick();
                     return true;
                 }
@@ -166,7 +161,19 @@ public class AddModuleActivity extends ActionBarActivity {
         Module module = new Module();
 
         if (name.equals("") || ip.equals("") || port.equals("")){
-            alert("必填项不可为空");
+            if (name.equals("")){
+                txtName.setError(getString(R.string.error_field_required));
+            }
+
+            if (ip.equals("")){
+                txtIP.setError(getString(R.string.error_field_required));
+            }
+
+            if (port.equals("")){
+                txtPort.setError(getString(R.string.error_field_required));
+            }
+
+            return;
         } else {
             module.setId(moduleId);
             module.setName(name);

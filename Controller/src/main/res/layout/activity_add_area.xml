@@ -16,7 +16,9 @@
         <EditText
             android:id="@+id/txt_area_name"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent" />
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/btn_add_area"
