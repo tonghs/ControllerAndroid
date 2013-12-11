@@ -32,6 +32,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "fun5 VARCHAR," +
                 "fun6 VARCHAR," +
                 "areaId int)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS user" +
+                "(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR, password VARCHAR)");
+
+        db.execSQL("INSERT INTO USER (username, password) values ('admin', 'admin')");
     }
 
     //如果DATABASE_VERSION值被改为2,系统发现现有数据库版本不同,即会调用onUpgrade

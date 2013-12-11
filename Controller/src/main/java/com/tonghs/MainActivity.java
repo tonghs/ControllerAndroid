@@ -226,15 +226,16 @@ public class MainActivity extends Activity {
             spinnerArea.setAdapter(adapter);
 
             Area area = (Area) spinnerArea.getSelectedItem();
-            int id = area.getId();
+            if (area != null){
+                int id = area.getId();
 
-            // 绑定模块
-            List<Module> listModule = mm.getModulesByArea(id);
-            ArrayAdapter<Module> adapterModule = new ArrayAdapter<Module>(getBaseContext(),
-                    android.R.layout.simple_spinner_item, listModule);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerModule.setAdapter(adapter);
-
+                // 绑定模块
+                List<Module> listModule = mm.getModulesByArea(id);
+                ArrayAdapter<Module> adapterModule = new ArrayAdapter<Module>(getBaseContext(),
+                        android.R.layout.simple_spinner_item, listModule);
+                adapterModule.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerModule.setAdapter(adapterModule);
+            }
         }
     }
 

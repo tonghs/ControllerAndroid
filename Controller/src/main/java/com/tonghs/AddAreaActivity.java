@@ -59,7 +59,7 @@ public class AddAreaActivity extends ActionBarActivity {
     }
 
     public void btnAddAreaClick(View v){
-
+        addArea();
     }
 
     public void addArea(){

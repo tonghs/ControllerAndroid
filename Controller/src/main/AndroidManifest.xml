@@ -16,12 +16,7 @@
         <activity
             android:name="com.tonghs.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/Theme.AppCompat.Light" >
         </activity>
         <activity
             android:name="com.tonghs.AddModuleActivity"
@@ -42,6 +37,21 @@
             android:name="com.tonghs.AreaMgrActivity"
             android:label="@string/action_area_mg"
             android:theme="@style/Theme.AppCompat.Light" >
+        </activity>
+        <activity
+            android:name="com.tonghs.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name="com.tonghs.StartActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

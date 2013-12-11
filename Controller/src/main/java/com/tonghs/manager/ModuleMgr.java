@@ -32,9 +32,9 @@ public class ModuleMgr {
     public void add(Module module) {
         db.beginTransaction();	//开始事务
         try {
-            db.execSQL("INSERT INTO module (name, ip, fun1, fun2, fun3, fun4, fun5, fun6, areaId) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    new Object[]{module.getName(), module.getIp(), module.getFun1(),
+            db.execSQL("INSERT INTO module (name, ip, port, fun1, fun2, fun3, fun4, fun5, fun6, areaId) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    new Object[]{module.getName(), module.getIp(), module.getPort(), module.getFun1(),
                             module.getFun2(), module.getFun3(), module.getFun4(),
                             module.getFun5(), module.getFun6(), module.getAreaId()});
             db.setTransactionSuccessful();	//设置事务成功完成
