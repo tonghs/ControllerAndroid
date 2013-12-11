@@ -212,8 +212,9 @@ public class LoginActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
             boolean result = true;
+            UserMgr um = new UserMgr(getBaseContext());
             try {
-                UserMgr um = new UserMgr(getBaseContext());
+
                 if (um.login(nUsername, mPassword)){
                     sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
@@ -226,6 +227,8 @@ public class LoginActivity extends Activity {
 
             } catch (Exception e) {
                 result = false;
+            } finally {
+                um.closeDB();
             }
 
             for (String credential : DUMMY_CREDENTIALS) {

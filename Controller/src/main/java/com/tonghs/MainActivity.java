@@ -33,8 +33,7 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     static final int TIME_OUT = 4000;
-    AreaMgr am;
-    ModuleMgr mm;
+
     Socket clientSocket;
     private ReceiveThread mReceiveThread = null;
     Switch fun1;
@@ -58,13 +57,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        am = new AreaMgr(this);
-        mm = new ModuleMgr(this);
+        AreaMgr am = new AreaMgr(this);
         getCmp();
         final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
 
         List<Area> listArea = am.getAreas();
+        am.closeDB();
 
         if(listArea != null && listArea.size() > 0){
 
@@ -81,7 +80,9 @@ public class MainActivity extends Activity {
                     int id = area.getId();
 
                     // 绑定模块
+                    ModuleMgr mm = new ModuleMgr(MainActivity.this);
                     List<Module> listModule = mm.getModulesByArea(id);
+                    mm.closeDB();
                     ArrayAdapter<Module> adapter = new ArrayAdapter<Module>(getBaseContext(),
                             android.R.layout.simple_spinner_item, listModule);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -163,13 +164,6 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        am.closeDB();
-        mm.closeDB();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -216,7 +210,9 @@ public class MainActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
         final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
+        AreaMgr am = new AreaMgr(this);
         List<Area> listArea = am.getAreas();
+        am.closeDB();
 
         if(listArea != null){
 
@@ -230,7 +226,9 @@ public class MainActivity extends Activity {
                 int id = area.getId();
 
                 // 绑定模块
+                ModuleMgr mm = new ModuleMgr(this);
                 List<Module> listModule = mm.getModulesByArea(id);
+                mm.closeDB();
                 ArrayAdapter<Module> adapterModule = new ArrayAdapter<Module>(getBaseContext(),
                         android.R.layout.simple_spinner_item, listModule);
                 adapterModule.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

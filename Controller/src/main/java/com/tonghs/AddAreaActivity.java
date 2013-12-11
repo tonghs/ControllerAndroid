@@ -69,6 +69,7 @@ public class AddAreaActivity extends ActionBarActivity {
         Area area = new Area();
         area.setName(text);
         am.add(area);
+        am.closeDB();
         InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(txtAreaName.getWindowToken(), 0);
         alert("添加成功");

@@ -42,8 +42,9 @@ public class AreaMgrActivity extends ActionBarActivity {
     public void bindData(){
         FrameLayout mLayout = (FrameLayout)findViewById(R.id.container);
         mLayout.removeAllViews();
-
-        List<Area> listArea = new AreaMgr(this).getAreas();
+        AreaMgr am = new AreaMgr(this);
+        List<Area> listArea = am.getAreas();
+        am.closeDB();
 
         if(listArea != null && listArea.size() > 0){
             List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
@@ -97,7 +98,9 @@ public class AreaMgrActivity extends ActionBarActivity {
                         Area area = new Area();
                         area.setId(areaId);
                         area.setName(areaName);
-                        new AreaMgr(AreaMgrActivity.this).update(area);
+                        AreaMgr am = new AreaMgr(AreaMgrActivity.this);
+                        am.update(area);
+                        am.closeDB();
                         bindData();
                         InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(txtAreaName.getWindowToken(), 0);
@@ -113,7 +116,9 @@ public class AreaMgrActivity extends ActionBarActivity {
         new AlertDialog.Builder(this).setTitle("确认").setMessage("确定删除吗？")
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        new AreaMgr(AreaMgrActivity.this).delete(areaId);
+                        AreaMgr am = new AreaMgr(AreaMgrActivity.this);
+                        am.delete(areaId);
+                        am.closeDB();
                         bindData();
                         alert("删除成功");
                     }

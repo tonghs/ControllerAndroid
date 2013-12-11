@@ -32,13 +32,11 @@ import java.util.List;
 public class AddModuleActivity extends ActionBarActivity {
     int action;
     int moduleId;
-    ModuleMgr mm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_module);
 
-        mm = new ModuleMgr(this);
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
 
         List<Area> listArea = new ArrayList<Area>();
@@ -51,7 +49,9 @@ public class AddModuleActivity extends ActionBarActivity {
 
         switch (requestCode){
             case RequestCode.SEND_SMS_ADD:
-                listArea = new AreaMgr(this).getAreas();
+                AreaMgr am = new AreaMgr(this);
+                listArea = am.getAreas();
+                am.closeDB();
                 break;
 
             case RequestCode.SEND_SMS_VIEW:
@@ -90,7 +90,9 @@ public class AddModuleActivity extends ActionBarActivity {
     public List<Area> initField(int moduleId){
         Module module = new Module();
         List<Area> listArea = new ArrayList<Area>();
+        ModuleMgr mm = new ModuleMgr(getBaseContext());
         module = mm.getModuleById(moduleId);
+        mm.closeDB();
         //获取区域
         Area area = new AreaMgr(this).getAreaById(module.getAreaId());
         listArea.add(area);
@@ -199,12 +201,14 @@ public class AddModuleActivity extends ActionBarActivity {
     public void addModule(Module module){
         ModuleMgr mm = new ModuleMgr(this);
         mm.add(module);
+        mm.closeDB();
         alert("添加成功");
     }
 
     public void modModule(Module module){
         ModuleMgr mm = new ModuleMgr(this);
         mm.update(module);
+        mm.closeDB();
 
         //数据是使用Intent返回
         Intent intent = new Intent();

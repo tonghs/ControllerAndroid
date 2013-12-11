@@ -45,7 +45,9 @@ public class ModuleMgrActivity extends ActionBarActivity {
 
         //绑定区域下拉列表
         final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
-        List<Area> listArea = new AreaMgr(this).getAreas();
+        AreaMgr am = new AreaMgr(this);
+        List<Area> listArea = am.getAreas();
+        am.closeDB();
 
         if(listArea != null && listArea.size() > 0){
 
@@ -152,7 +154,9 @@ public class ModuleMgrActivity extends ActionBarActivity {
         new AlertDialog.Builder(this).setTitle("确认").setMessage("确定删除吗？")
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        new ModuleMgr(ModuleMgrActivity.this).delete(moduleId);
+                        ModuleMgr mm = new ModuleMgr(ModuleMgrActivity.this);
+                        mm.delete(moduleId);
+                        mm.closeDB();
                         bindData();
                         alert("删除成功");
                     }
