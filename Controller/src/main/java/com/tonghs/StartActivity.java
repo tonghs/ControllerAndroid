@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
+import com.tonghs.manager.UserMgr;
+
 public class StartActivity extends ActionBarActivity {
 
     private SharedPreferences sp;
@@ -18,12 +20,13 @@ public class StartActivity extends ActionBarActivity {
         String username = sp.getString("username", "");
         String password = sp.getString("password", "");
         Intent intent = new Intent();
-
-        if (username.equals("") || password.equals("")){
-            intent.setClass(StartActivity.this, LoginActivity.class);
-        } else {
+        UserMgr um = new UserMgr(this);
+        if (!username.equals("") && !password.equals("") && um.login(username, password)){
             intent.setClass(StartActivity.this, MainActivity.class);
+        } else {
+            intent.setClass(StartActivity.this, LoginActivity.class);
         }
+        um.closeDB();
         startActivity(intent);
         finish();
     }

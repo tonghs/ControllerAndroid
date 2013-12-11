@@ -24,14 +24,12 @@ public class UserMgr {
     }
 
     /**
-     * update user
-     * @param user
+     * update password
+     * @param password
      */
-    public void update(User user) {
+    public void update(String password) {
         ContentValues cv = new ContentValues();
-        cv.put("username", user.getUsername());
-        cv.put("password", user.getPassword());
-        db.update("user", cv, "id = ?", new String[]{String.valueOf(user.getId())});
+        db.execSQL(String.format("update user set password = '%s'", password));
     }
 
     public User getUserById(int userId){
@@ -45,6 +43,16 @@ public class UserMgr {
         }
         c.close();
         return user;
+    }
+
+    public boolean validPwd(String password){
+        boolean isSuccess = false;
+        Cursor c = queryTheCursorByPwd(password);
+        if (c.moveToNext()) {
+            isSuccess = true;
+        }
+        c.close();
+        return isSuccess;
     }
 
     /**
@@ -78,6 +86,11 @@ public class UserMgr {
      */
     public Cursor queryTheCursorById(int id) {
         Cursor c = db.rawQuery(String.format("SELECT * FROM user where id = %d", id), null);
+        return c;
+    }
+
+    public Cursor queryTheCursorByPwd(String password) {
+        Cursor c = db.rawQuery(String.format("SELECT * FROM user where password = '%s'", password), null);
         return c;
     }
 

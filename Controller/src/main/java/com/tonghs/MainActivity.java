@@ -1,6 +1,8 @@
 package com.tonghs;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -12,12 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.tonghs.manager.AreaMgr;
 import com.tonghs.manager.ModuleMgr;
+import com.tonghs.manager.UserMgr;
 import com.tonghs.model.Area;
 import com.tonghs.model.MessageUtil;
 import com.tonghs.model.Module;
@@ -25,9 +29,11 @@ import com.tonghs.util.RequestCode;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import android.view.LayoutInflater;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -185,25 +191,100 @@ public class MainActivity extends Activity {
                 bundle.putInt("requestCode", RequestCode.SEND_SMS_ADD);
                 intent.putExtras(bundle);
                 intent.setClass(MainActivity.this, AddModuleActivity.class);
+                /* 启动一个新的Activity */
+                startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
                 break;
             case R.id.action_add_area:
 				/* 指定intent要启动的类 */
                 intent.setClass(MainActivity.this, AddAreaActivity.class);
+                /* 启动一个新的Activity */
+                startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
                 break;
             case R.id.action_module_mg:
                 /* 指定intent要启动的类 */
                 intent.setClass(MainActivity.this, ModuleMgrActivity.class);
+                /* 启动一个新的Activity */
+                startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
                 break;
             case R.id.action_area_mg:
                 /* 指定intent要启动的类 */
                 intent.setClass(MainActivity.this, AreaMgrActivity.class);
+                /* 启动一个新的Activity */
+                startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
+                break;
+            case R.id.action_update_pwd:
+                updatePwd();
                 break;
         }
 
-        /* 启动一个新的Activity */
-        startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
-
         return true;
+    }
+
+    private void setClosable(DialogInterface dialog, boolean b) {
+        try {
+            Field field = dialog.getClass().getSuperclass()
+                    .getDeclaredField("mShowing");
+            field.setAccessible(true);
+            field.set(dialog, b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePwd(){
+        LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.update_pwd, null);
+        new AlertDialog.Builder(this).setTitle("修改密码").setIcon(android.R.drawable.ic_dialog_info)
+                .setView(view)
+                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // 不关闭
+                        setClosable(dialogInterface, false);
+                        EditText txtOldPwd = (EditText) view.findViewById(R.id.txt_old_pwd);
+                        EditText txtNewPwd = (EditText) view.findViewById(R.id.txt_new_pwd);
+                        EditText txtNewPwdRe = (EditText) view.findViewById(R.id.txt_new_pwd_re);
+
+                        String oldPwd = txtOldPwd.getText().toString();
+                        String newPwd = txtNewPwd.getText().toString();
+                        String newPwdRe = txtNewPwdRe.getText().toString();
+
+                        if (!oldPwd.equals("") && !newPwd.equals("") && !newPwdRe.equals("")) {
+                            UserMgr um = new UserMgr(getBaseContext());
+                            if (um.validPwd(oldPwd)) {
+                                //两次输入相同
+                                if (newPwd.equals(newPwdRe)) {
+                                    um.update(newPwd);
+                                    alert("修改成功");
+                                    // 关闭对话框
+                                    setClosable(dialogInterface, true);
+                                    dialogInterface.dismiss();
+                                } else {
+                                    //两次输入不同
+                                    txtNewPwdRe.setError(getString(R.string.error_not_match));
+                                }
+                                um.closeDB();
+                            } else {
+                                //原密码错误
+                                txtOldPwd.setError(getString(R.string.error_old_pwd_invalid));
+                                um.closeDB();
+                                return;
+                            }
+                        } else {
+                            //有空值
+                            if (oldPwd.equals("")) {
+                                txtOldPwd.setError(getString(R.string.error_field_required));
+                            }
+                            if (newPwd.equals("")) {
+                                txtNewPwd.setError(getString(R.string.error_field_required));
+                            }
+                            if (newPwdRe.equals("")) {
+                                txtNewPwdRe.setError(getString(R.string.error_field_required));
+                            }
+                            return;
+                        }
+                    }
+                }).setNegativeButton("否", null).show();
     }
 
     @Override

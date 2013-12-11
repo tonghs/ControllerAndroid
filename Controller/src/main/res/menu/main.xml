@@ -15,4 +15,8 @@
         android:title="@string/action_area_mg"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/action_update_pwd"
+        android:title="@string/action_update_pwd"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>
