@@ -11,7 +11,7 @@ public class MessageUtil {
     public static Hashtable<String, byte[]> currentStatus = new Hashtable<String, byte[]>();
 
     public byte[] getRequestMsg() {
-        requestMsg = new byte[16];
+        requestMsg = new byte[15];
         //协议头
         requestMsg[0] = (byte)0xAA;
         requestMsg[1] = 0x55;
@@ -33,11 +33,9 @@ public class MessageUtil {
         requestMsg[10] = 0x00;
 
         requestMsg[11] = 0x00;
-
         requestMsg[12] = 0x00;
-        requestMsg[13] = 0x00;
-        requestMsg[14] = (byte)0xcc;
-        requestMsg[15] = (byte)0xdd;
+        requestMsg[13] = (byte)0xcc;
+        requestMsg[14] = (byte)0xdd;
 
         return requestMsg;
     }
@@ -47,7 +45,7 @@ public class MessageUtil {
     }
 
     public byte[] getControlMsg() {
-        controlMsg = new byte[16];
+        controlMsg = new byte[15];
         //协议头
         controlMsg[0] = (byte)0xAA;
         controlMsg[1] = 0x55;
@@ -70,11 +68,9 @@ public class MessageUtil {
         controlMsg[10] = 0x00;
 
         controlMsg[11] = 0x00;
-
         controlMsg[12] = 0x00;
-        controlMsg[13] = 0x00;
-        controlMsg[14] = (byte)0xcc;
-        controlMsg[15] = (byte)0xdd;
+        controlMsg[13] = (byte)0xcc;
+        controlMsg[14] = (byte)0xdd;
 
         return controlMsg;
     }

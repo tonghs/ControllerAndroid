@@ -26,6 +26,7 @@ import com.tonghs.model.MessageUtil;
 import com.tonghs.model.Module;
 import com.tonghs.util.RequestCode;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    static final int TIME_OUT = 4000;
+    static final int TIME_OUT = 1000;
 
     Socket clientSocket;
     private ReceiveThread mReceiveThread = null;
@@ -436,8 +437,21 @@ public class MainActivity extends Activity {
                 //获得输入流
                 this.mInputStream = s.getInputStream();
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                try {
+                    if (mInputStream != null){
+                        mInputStream.close();
+                    }
+                    if (s != null){
+                        s.close();
+                    }
+                } catch (IOException e1) {
+                    //读取超时
+                    Bundle bundle = new Bundle();
+                    bundle.putByteArray("msg", null);
+                    Message m = new Message();
+                    m.setData(bundle);
+                    mHandler.sendMessage(m);
+                }
             }
         }
 
@@ -446,11 +460,24 @@ public class MainActivity extends Activity {
         {
             while(!stop)
             {
-                this.buf = new byte[16];
+                this.buf = new byte[15];
 
                 //读取输入的数据(阻塞读)
                 try {
                     this.mInputStream.read(buf);
+
+                    if (buf != null && buf.length > 0 && buf[0] == (byte)0xAA &&
+                            buf[1] == 0x55 && buf[13] == (byte)0xcc && buf[14] == (byte)0xdd){
+                        //报文验证成功
+                        stop = true;
+                        Bundle bundle = new Bundle();
+                        bundle.putByteArray("msg", buf);
+                        Message m = new Message();
+                        m.setData(bundle);
+                        mHandler.sendMessage(m);
+                        String ip = clientSocket.getLocalAddress().toString();
+                        MessageUtil.currentStatus.put(ip, buf);
+                    }
                 } catch (Exception e1) {
                     stop = true;
                     //读取超时
@@ -459,19 +486,21 @@ public class MainActivity extends Activity {
                     Message m = new Message();
                     m.setData(bundle);
                     mHandler.sendMessage(m);
+                } finally {
+                    try {
+                        if (mInputStream != null){
+                            mInputStream.close();
+                        }
+                    } catch (IOException e1) {
+                        //读取超时
+                        Bundle bundle = new Bundle();
+                        bundle.putByteArray("msg", null);
+                        Message m = new Message();
+                        m.setData(bundle);
+                        mHandler.sendMessage(m);
+                    }
                 }
-                if (buf != null && buf.length > 0 && buf[0] == (byte)0xAA &&
-                        buf[1] == 0x55 && buf[14] == (byte)0xcc && buf[15] == (byte)0xdd){
-                    //报文验证成功
-                    stop = true;
-                    Bundle bundle = new Bundle();
-                    bundle.putByteArray("msg", buf);
-                    Message m = new Message();
-                    m.setData(bundle);
-                    mHandler.sendMessage(m);
-                    String ip = clientSocket.getLocalAddress().toString();
-                    MessageUtil.currentStatus.put(ip, buf);
-                }
+
             }
         }
     }
