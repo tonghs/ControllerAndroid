@@ -49,7 +49,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_margin_button"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,9 +58,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep1"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="1"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位1"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -73,9 +73,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep2"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="2"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位2"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -87,9 +87,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep3"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="3"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位3"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -101,13 +101,19 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep4"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="4"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位4"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
             </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,9 +121,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep5"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="5"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位5"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -129,9 +135,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep6"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="6"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位6"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -143,9 +149,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep7"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="7"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位7"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -157,9 +163,9 @@
                 android:gravity="center">
                 <TextView
                     android:id="@+id/lbl_ep8"
-                    android:layout_width="@dimen/ep_area"
-                    android:layout_height="@dimen/ep_area"
-                    android:text="8"
+                    android:layout_width="@dimen/ep_width"
+                    android:layout_height="@dimen/ep_height"
+                    android:text="电位8"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@color/green"/>
@@ -169,6 +175,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:orientation="horizontal">
 
             <Switch

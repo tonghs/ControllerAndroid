@@ -32,11 +32,14 @@ public class ModuleMgr {
     public void add(Module module) {
         db.beginTransaction();	//开始事务
         try {
-            db.execSQL("INSERT INTO module (name, ip, port, fun1, fun2, fun3, fun4, fun5, fun6, areaId) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            db.execSQL("INSERT INTO module (name, ip, port, fun1, fun2, fun3, fun4, fun5, fun6," +
+                    "ep1, ep2, ep3, ep4, ep5, ep6, ep7, ep8, areaId) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     new Object[]{module.getName(), module.getIp(), module.getPort(), module.getFun1(),
-                            module.getFun2(), module.getFun3(), module.getFun4(),
-                            module.getFun5(), module.getFun6(), module.getAreaId()});
+                            module.getFun2(), module.getFun3(), module.getFun4(), module.getFun5(),
+                            module.getFun6(), module.getEp1(), module.getEp2(), module.getEp3(),
+                            module.getEp4(), module.getEp5(), module.getEp6(), module.getEp7(),
+                            module.getEp8(), module.getAreaId()});
             db.setTransactionSuccessful();	//设置事务成功完成
         } finally {
             db.endTransaction();	//结束事务
@@ -58,6 +61,16 @@ public class ModuleMgr {
         cv.put("fun4", module.getFun4());
         cv.put("fun5", module.getFun5());
         cv.put("fun6", module.getFun6());
+
+        cv.put("ep1", module.getEp1());
+        cv.put("ep2", module.getEp2());
+        cv.put("ep3", module.getEp3());
+        cv.put("ep4", module.getEp4());
+        cv.put("ep5", module.getEp5());
+        cv.put("ep6", module.getEp6());
+        cv.put("ep7", module.getEp7());
+        cv.put("ep8", module.getEp8());
+
         db.update("module", cv, "id = ?", new String[]{String.valueOf(module.getId())});
     }
 
@@ -96,6 +109,16 @@ public class ModuleMgr {
             module.setFun4(c.getString(c.getColumnIndex("fun4")));
             module.setFun5(c.getString(c.getColumnIndex("fun5")));
             module.setFun6(c.getString(c.getColumnIndex("fun6")));
+
+            module.setEp1(c.getString(c.getColumnIndex("ep1")));
+            module.setEp2(c.getString(c.getColumnIndex("ep2")));
+            module.setEp3(c.getString(c.getColumnIndex("ep3")));
+            module.setEp4(c.getString(c.getColumnIndex("ep4")));
+            module.setEp5(c.getString(c.getColumnIndex("ep5")));
+            module.setEp6(c.getString(c.getColumnIndex("ep6")));
+            module.setEp7(c.getString(c.getColumnIndex("ep7")));
+            module.setEp8(c.getString(c.getColumnIndex("ep8")));
+
             module.setAreaId(c.getInt(c.getColumnIndex("areaId")));
             modules.add(module);
         }
@@ -118,6 +141,16 @@ public class ModuleMgr {
             module.setFun4(c.getString(c.getColumnIndex("fun4")));
             module.setFun5(c.getString(c.getColumnIndex("fun5")));
             module.setFun6(c.getString(c.getColumnIndex("fun6")));
+
+            module.setEp1(c.getString(c.getColumnIndex("ep1")));
+            module.setEp2(c.getString(c.getColumnIndex("ep2")));
+            module.setEp3(c.getString(c.getColumnIndex("ep3")));
+            module.setEp4(c.getString(c.getColumnIndex("ep4")));
+            module.setEp5(c.getString(c.getColumnIndex("ep5")));
+            module.setEp6(c.getString(c.getColumnIndex("ep6")));
+            module.setEp7(c.getString(c.getColumnIndex("ep7")));
+            module.setEp8(c.getString(c.getColumnIndex("ep8")));
+
             module.setAreaId(c.getInt(c.getColumnIndex("areaId")));
             break;
         }

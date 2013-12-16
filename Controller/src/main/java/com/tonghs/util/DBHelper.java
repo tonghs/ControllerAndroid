@@ -31,6 +31,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 "fun4 VARCHAR," +
                 "fun5 VARCHAR," +
                 "fun6 VARCHAR," +
+                "ep1 VARCHAR," +
+                "ep2 VARCHAR," +
+                "ep3 VARCHAR," +
+                "ep4 VARCHAR," +
+                "ep5 VARCHAR," +
+                "ep6 VARCHAR," +
+                "ep7 VARCHAR," +
+                "ep8 VARCHAR," +
                 "areaId int)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS user" +

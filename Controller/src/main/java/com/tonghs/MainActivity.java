@@ -56,6 +56,9 @@ public class MainActivity extends Activity {
     TextView lblEp6;
     TextView lblEp7;
     TextView lblEp8;
+
+    Spinner spinnerModule;
+    Spinner spinnerArea;
     String ip;
     int port;
 
@@ -65,8 +68,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         AreaMgr am = new AreaMgr(this);
         getCmp();
-        final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
-        final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
+        spinnerModule = (Spinner)findViewById(R.id.modules);
+        spinnerArea = (Spinner)findViewById(R.id.areas);
 
         List<Area> listArea = am.getAreas();
         am.closeDB();
@@ -113,6 +116,15 @@ public class MainActivity extends Activity {
                     fun4.setText(module.getFun4());
                     fun5.setText(module.getFun5());
                     fun6.setText(module.getFun6());
+
+                    lblEp1.setText(module.getEp1());
+                    lblEp2.setText(module.getEp2());
+                    lblEp3.setText(module.getEp3());
+                    lblEp4.setText(module.getEp4());
+                    lblEp5.setText(module.getEp5());
+                    lblEp6.setText(module.getEp6());
+                    lblEp7.setText(module.getEp7());
+                    lblEp8.setText(module.getEp8());
                     //获取ip
                     ip = module.getIp();
                     port = module.getPort();
@@ -289,8 +301,6 @@ public class MainActivity extends Activity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        final Spinner spinnerArea = (Spinner)findViewById(R.id.areas);
-        final Spinner spinnerModule = (Spinner)findViewById(R.id.modules);
         AreaMgr am = new AreaMgr(this);
         List<Area> listArea = am.getAreas();
         am.closeDB();
