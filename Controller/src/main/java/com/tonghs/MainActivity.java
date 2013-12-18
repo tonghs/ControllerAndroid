@@ -198,13 +198,19 @@ public class MainActivity extends Activity {
         switch (item_id)
         {
             case R.id.action_add_module:
-				/* 指定intent要启动的类 */
-                Bundle bundle=new  Bundle();
-                bundle.putInt("requestCode", RequestCode.SEND_SMS_ADD);
-                intent.putExtras(bundle);
-                intent.setClass(MainActivity.this, AddModuleActivity.class);
-                /* 启动一个新的Activity */
-                startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
+                AreaMgr am = new AreaMgr(getBaseContext());
+                List<Area> list = am.getAreas();
+                if (list != null && list.size() > 0){
+                    /* 指定intent要启动的类 */
+                    Bundle bundle=new  Bundle();
+                    bundle.putInt("requestCode", RequestCode.SEND_SMS_ADD);
+                    intent.putExtras(bundle);
+                    intent.setClass(MainActivity.this, AddModuleActivity.class);
+                    /* 启动一个新的Activity */
+                    startActivityForResult(intent, RequestCode.SEND_SMS_ADD);
+                } else {
+                    alert("请先建立区域");
+                }
                 break;
             case R.id.action_add_area:
 				/* 指定intent要启动的类 */
