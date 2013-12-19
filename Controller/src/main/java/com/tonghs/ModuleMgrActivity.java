@@ -85,8 +85,9 @@ public class ModuleMgrActivity extends ActionBarActivity {
     public void bindData(){
         LinearLayout mLayout = (LinearLayout)findViewById(R.id.list_container);
         mLayout.removeAllViews();
-
-        List<Module> listModule = new ModuleMgr(this).getModulesByArea(areaId);
+        ModuleMgr mm = new ModuleMgr(this);
+        List<Module> listModule = mm.getModulesByArea(areaId);
+        mm.closeDB();
         if(listModule != null && listModule.size() > 0){
             List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
             for (Module module : listModule){

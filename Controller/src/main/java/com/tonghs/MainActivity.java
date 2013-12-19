@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    static final int TIME_OUT = 1000;
+    static final int TIME_OUT = 1500;
 
     Socket clientSocket;
     private ReceiveThread mReceiveThread = null;
@@ -61,6 +61,8 @@ public class MainActivity extends Activity {
     Spinner spinnerArea;
     String ip;
     int port;
+
+    OutputStream outStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +202,7 @@ public class MainActivity extends Activity {
             case R.id.action_add_module:
                 AreaMgr am = new AreaMgr(getBaseContext());
                 List<Area> list = am.getAreas();
+                am.closeDB();
                 if (list != null && list.size() > 0){
                     /* 指定intent要启动的类 */
                     Bundle bundle=new  Bundle();
@@ -372,7 +375,7 @@ public class MainActivity extends Activity {
                 clientSocket = new Socket();
                 SocketAddress socAddress = new InetSocketAddress(ip, port);
                 clientSocket.connect(socAddress, TIME_OUT);
-                OutputStream outStream = clientSocket.getOutputStream();
+                outStream = clientSocket.getOutputStream();
                 outStream.write(msg);
 
                 mReceiveThread = new ReceiveThread(clientSocket);
@@ -491,7 +494,7 @@ public class MainActivity extends Activity {
                         Message m = new Message();
                         m.setData(bundle);
                         mHandler.sendMessage(m);
-                        String ip = clientSocket.getLocalAddress().toString();
+                        String ip = clientSocket.getInetAddress().toString();
                         MessageUtil.currentStatus.put(ip, buf);
                     }
                 } catch (Exception e1) {
@@ -506,6 +509,8 @@ public class MainActivity extends Activity {
                     try {
                         if (mInputStream != null){
                             mInputStream.close();
+                            outStream.close();
+                            clientSocket.close();
                         }
                     } catch (IOException e1) {
                         //读取超时

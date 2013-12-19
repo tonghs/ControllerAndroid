@@ -122,17 +122,21 @@ public class MessageUtil {
      * @return
      */
     public byte[] getControlMsg(String ip, boolean isChecked, int index){
-        byte[] msg = currentStatus.get(ip);
+        byte[] msg = null;
+        try {
+            msg = currentStatus.get("/" + ip);
+            if(msg == null){
+                msg = this.getControlMsg();
+            }
 
-        if(msg == null){
-            msg = this.getControlMsg();
+            String byteStr = byteToBit(msg[9 - index / 8]);
+            char[] temp = byteStr.toCharArray();
+            temp[7 - index % 8] = isChecked ? '1' : '0';
+            byteStr = String.valueOf(temp);
+            msg[9 - index / 8] = decodeBinaryString(byteStr);
+        }catch (Exception e){
+
         }
-
-        String byteStr = byteToBit(msg[9 - index / 8]);
-        char[] temp = byteStr.toCharArray();
-        temp[7 - index % 8] = isChecked ? '1' : '0';
-        byteStr = String.valueOf(temp);
-        msg[9 - index / 8] = decodeBinaryString(byteStr);
 
         return msg;
     }
